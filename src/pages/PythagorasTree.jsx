@@ -30,6 +30,13 @@ const scale = (vec, value) => {
   vec.y *= value;
 };
 
+const sum = (vec1, vec2) => {
+  return {
+    x: vec1.x + vec2.x,
+    y: vec1.y + vec2.y
+  };
+};
+
 const drawTree = (ctx, n, a, b, c, d) => {
   if (n === 0)
     return;
@@ -46,14 +53,14 @@ const drawTree = (ctx, n, a, b, c, d) => {
   normalize(vec);
   rotate(vec, alpha);
   scale(vec, leftSide);
-  const lastPoint = { x: b.x + vec.x, y: b.y + vec.y };
+  const newA = b;
+  const newD = sum(newA, vec);
+  rotate(vec, Math.PI / 2);
+  const newB = sum(newA, vec);
+  const newC = sum(newD, vec);
   // const x = b.x + vec.x * ()
   drawRect(ctx, a, b, c, d);
-  const start = b;
-
-  drawTree(ctx, n - 1, b,
-            { x: b.x + vec.x, y: b.y + vec.y },
-            {  }, lastPoint);
+  drawTree(ctx, n - 1, newA, newB, newC, newD);
 }
 
 const draw = (ctx) => {
@@ -63,12 +70,13 @@ const draw = (ctx) => {
   const Point = (x, y) => ({x, y});
   const xs = 80;
   const ys = 70;
-  const side = 250;
+  const side = 90;
   const first = Point(xs, ys);
   const second = Point(xs, ys + side);
   const third = Point(xs + side, ys + side);
   const last = Point(xs + side, ys);
-  drawTree(ctx, 1, first, second, third, last);
+  ctx.clearRect(0, 0, 500, 500);
+  drawTree(ctx, 3, first, second, third, last);
 };
 
 const PythagorasTree = (props) => {
