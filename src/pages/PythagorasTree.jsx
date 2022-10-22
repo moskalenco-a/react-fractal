@@ -48,19 +48,22 @@ const drawTree = (ctx, n, a, b, c, d) => {
 
   const side = Math.hypot(b.x - c.x, b.y - c.y);
   const leftSide = side * Math.sin(beta);
-  const height = leftSide * Math.sin(alpha);
-  let vec = { x: c.x - b.x, y: c.y - b.y };
+  // const height = leftSide * Math.sin(alpha);
+  let vec = { x: d.x - a.x, y: d.y - a.y };
   normalize(vec);
-  rotate(vec, alpha);
+  rotate(vec, -alpha);
   scale(vec, leftSide);
-  const newA = b;
-  const newD = sum(newA, vec);
-  rotate(vec, Math.PI / 2);
-  const newB = sum(newA, vec);
-  const newC = sum(newD, vec);
+  let newB = a;
+  let newC = sum(newB, vec);
+  rotate(vec, -Math.PI / 2);
+  let newA = sum(newB, vec);
+  let newD = sum(newC, vec);
   // const x = b.x + vec.x * ()
   drawRect(ctx, a, b, c, d);
   drawTree(ctx, n - 1, newA, newB, newC, newD);
+  newB = newC;
+  newC = d;
+  // drawTree(ctx, n - 1, newA, newD, newC, newB);
 }
 
 const draw = (ctx) => {
@@ -68,15 +71,15 @@ const draw = (ctx) => {
   ctx.strokeStyle = "#000";
   ctx.fillStyle = "#0f0";
   const Point = (x, y) => ({x, y});
-  const xs = 80;
-  const ys = 70;
+  const xs = 200;
+  const ys = 150;
   const side = 90;
   const first = Point(xs, ys);
   const second = Point(xs, ys + side);
   const third = Point(xs + side, ys + side);
   const last = Point(xs + side, ys);
   ctx.clearRect(0, 0, 500, 500);
-  drawTree(ctx, 3, first, second, third, last);
+  drawTree(ctx, 7, first, second, third, last);
 };
 
 const PythagorasTree = (props) => {
