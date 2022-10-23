@@ -135,9 +135,9 @@ const PythagorasTree = (props) => {
     <div className={styles.container}>
       <div>
         <p>Initial size = {initialSize}</p>
-        <input type="range" value={initialSize} min="1" max="200" step="1" onChange={onSizeChange} />
+        <input type="range" value={initialSize} min="1" max="200" step="1" onChange={onSizeChange} className={styles.range} />
         <p>Levels = {levelsCount}</p>
-        <input type="range" value={levelsCount} min="1" max="10" step="1" onChange={onLevelsCountChange} />
+        <input type="range" value={levelsCount} min="1" max="10" step="1" onChange={onLevelsCountChange} className={styles.range} />
         <p>Center:</p>
         <div className={styles.coords}>
           <div className={styles.coordX}>
