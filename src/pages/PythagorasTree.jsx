@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styles from './PythagorasTree.module.css';
 
 const drawRect = (ctx, a, b, c, d) => {
@@ -44,18 +44,17 @@ const diff = (vec1, vec2) => {
   };
 };
 
+const Point = (x, y) => ({x, y});
+
 const drawTree = (ctx, n, a, b, c, d) => {
   if (n === 0)
     return;
-  // console.log(a);
-  // console.log(b);
-  // console.log(c);
-  const alpha = Math.PI / 3; // 60
-  const  beta = Math.PI / 6; // 30
+
+  const alpha = Math.PI / 6;         // 30
+  const  beta = Math.PI / 2 - alpha; // 60
 
   const side = Math.hypot(b.x - c.x, b.y - c.y);
   const leftSide = side * Math.sin(beta);
-  // const height = leftSide * Math.sin(alpha);
   let vec = diff(d, a);
   normalize(vec);
   rotate(vec, -alpha);
@@ -65,7 +64,6 @@ const drawTree = (ctx, n, a, b, c, d) => {
   rotate(vec, -Math.PI / 2);
   let newA = sum(newB, vec);
   let newD = sum(newC, vec);
-  // const x = b.x + vec.x * ()
   drawRect(ctx, a, b, c, d);
   drawTree(ctx, n - 1, newA, newB, newC, newD);
 
@@ -79,40 +77,71 @@ const drawTree = (ctx, n, a, b, c, d) => {
   newD = sum(newC, vec);
   newA = sum(newB, vec);
   drawTree(ctx, n - 1, newA, newB, newC, newD);
-  // const rightSide = side * Math.sin(beta);
-  // drawTree(ctx, n - 1, newA, newD, newC, newB);
-}
+};
 
-const draw = (ctx) => {
+const draw = (ctx, initialSize = 50, levels = 9, cx = 250, cy = 350) => {
   ctx.lineWidth = 3;
   ctx.strokeStyle = "#000";
   ctx.fillStyle = "#0f0";
-  const Point = (x, y) => ({x, y});
-  const xs = 250;
-  const ys = 350;
-  const side = 50;
-  const first = Point(xs, ys);
-  const second = Point(xs, ys + side);
-  const third = Point(xs + side, ys + side);
-  const last = Point(xs + side, ys);
+  const first = Point(cx, cy);
+  const second = Point(cx, cy + initialSize);
+  const third = Point(cx + initialSize, cy + initialSize);
+  const last = Point(cx + initialSize, cy);
   ctx.clearRect(0, 0, 500, 500);
-  drawTree(ctx, 9, first, second, third, last);
+  drawTree(ctx, levels, first, second, third, last);
 };
 
 const PythagorasTree = (props) => {
-  const canvasRef = useRef();
+  const canvasRef = useRef(null);
+
+  const [initialSize, setInitialSize] = useState(50);
+  const [levelsCount, setLevelsCount] = useState(9);
+  const [centerX, setCenterX] = useState(250);
+  const [centerY, setCenterY] = useState(350);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    draw(context);
-  }, [draw]);
+    draw(context, initialSize, levelsCount, centerX, centerY);
+  }, [draw, initialSize, levelsCount, centerX, centerY]);
 
+  const onSizeChange = (event) => {
+    setInitialSize(parseInt(event.target.value));
+  };
+  const onLevelsCountChange = (event) => {
+    setLevelsCount(parseInt(event.target.value));
+  };
+  const onCenterXChange = (event) => {
+    setCenterX(parseInt(event.target.value));
+  };
+  const onCenterYChange = (event) => {
+    setCenterY(parseInt(event.target.value));
+  };
   return (
-    <canvas ref={canvasRef}
-            width="500"
-            height="500"
-            className={styles.canvas} />
+    <div className={styles.container}>
+      <div>
+        <p>Initial size = {initialSize}</p>
+        <input type="range" value={initialSize} min="1" max="200" step="1" onChange={onSizeChange} />
+        <p>Levels = {levelsCount}</p>
+        <input type="range" value={levelsCount} min="1" max="10" step="1" onChange={onLevelsCountChange} />
+        <p>Center:</p>
+        <div className={styles.coords}>
+          <div className={styles.coordX}>
+            <p>X:</p>
+            <input type="text" placeholder="X" value={centerX} onChange={onCenterXChange} className={styles.coordXInput} />
+          </div>
+          <div className={styles.coordY}>
+            <p>Y:</p>
+            <input type="text" placeholder="Y" value={centerY} onChange={onCenterYChange} className={styles.coordYInput} />
+          </div>
+        </div>
+      </div>
+
+      <canvas ref={canvasRef}
+              width="500"
+              height="500"
+              className={styles.canvas} />
+    </div>
   );
 };
 
