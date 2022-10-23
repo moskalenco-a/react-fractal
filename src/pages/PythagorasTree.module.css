@@ -24,3 +24,10 @@
   border: 1px solid blue;
   /* margin-left: 30px; */
 }
+
+.colorContainer {
+  display: flex;
+  gap: 10px;
+  /* justify-content: center; */
+  align-items: center;
+}

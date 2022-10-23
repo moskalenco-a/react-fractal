@@ -79,10 +79,17 @@ const drawTree = (ctx, n, a, b, c, d) => {
   drawTree(ctx, n - 1, newA, newB, newC, newD);
 };
 
-const draw = (ctx, initialSize = 50, levels = 9, cx = 250, cy = 350) => {
+const draw = (ctx, initialSize = 50, levels = 9, cx = 250, cy = 350, color = '#000000', lineStyle = 'solid') => {
+  const lineStyles = {
+    solid: [],
+    dash: [10, 10],
+    dot: [1, 1],
+    dashdot: [12, 3, 3],
+  };
+  ctx.setLineDash(lineStyles[lineStyle]);
   ctx.lineWidth = 3;
-  ctx.strokeStyle = "#000";
-  ctx.fillStyle = "#0f0";
+  ctx.strokeStyle = color;
+  ctx.fillStyle = '#00ff00';
   const first = Point(cx, cy);
   const second = Point(cx, cy + initialSize);
   const third = Point(cx + initialSize, cy + initialSize);
@@ -98,12 +105,13 @@ const PythagorasTree = (props) => {
   const [levelsCount, setLevelsCount] = useState(9);
   const [centerX, setCenterX] = useState(250);
   const [centerY, setCenterY] = useState(350);
-
+  const [color, setColor] = useState('#000000');
+  const [lineStyle, setLineStyle] = useState('solid');
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    draw(context, initialSize, levelsCount, centerX, centerY);
-  }, [draw, initialSize, levelsCount, centerX, centerY]);
+    draw(context, initialSize, levelsCount, centerX, centerY, color, lineStyle);
+  }, [draw, initialSize, levelsCount, centerX, centerY, color, lineStyle]);
 
   const onSizeChange = (event) => {
     setInitialSize(parseInt(event.target.value));
@@ -117,6 +125,12 @@ const PythagorasTree = (props) => {
   const onCenterYChange = (event) => {
     setCenterY(parseInt(event.target.value));
   };
+  const onColorChange = (event) => {
+    setColor(event.target.value);
+  };
+  const onLineStyleChange = (event) => {
+    setLineStyle(event.target.value);
+  }
   return (
     <div className={styles.container}>
       <div>
@@ -134,6 +148,18 @@ const PythagorasTree = (props) => {
             <p>Y:</p>
             <input type="text" placeholder="Y" value={centerY} onChange={onCenterYChange} className={styles.coordYInput} />
           </div>
+        </div>
+        <div className={styles.colorContainer}>
+          <select value={lineStyle} onChange={onLineStyleChange}>
+            <option value="solid">Solid</option>
+            <option value="dash">Dash</option>
+            <option value="dot">Dot</option>
+            <option value="dashdot">Dashdot</option>
+          </select>
+          <p>Color:</p>
+          <input type="color" value={color} onChange={onColorChange} />
+        </div>
+        <div>
         </div>
       </div>
 
