@@ -28,7 +28,6 @@
 .colorContainer {
   display: flex;
   gap: 10px;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -76,16 +75,9 @@ input[type="range"] {
 
 ::-moz-range-thumb {
     background: #211f1f;
-    background: yellow;
     height: 20px;
     width: 20px;
-    /* width: 0; */
-    /* border: 3px solid #999; */
-    /* border: 7px solid red; */
-    /* border-right: 3px solid white; */
-    /* border-radius: 0 !important; */
     border-radius: 50% !important;
-
     box-shadow: -200px 0 0 195px #faaa8d;
     box-sizing: border-box;
 }
