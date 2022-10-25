@@ -1,3 +1,8 @@
 body {
   background-color: #feefdd;
 }
+
+html, body, * {
+  margin: 0;
+  padding: 0;
+}
