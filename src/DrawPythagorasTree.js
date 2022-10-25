@@ -1,3 +1,7 @@
+import { Point, sum, diff,
+         normalize, scale, rotate
+       } from './vecUtils';
+
 const drawRect = (ctx, a, b, c, d) => {
   ctx.beginPath();
   ctx.moveTo(a.x, a.y);
@@ -8,40 +12,6 @@ const drawRect = (ctx, a, b, c, d) => {
   ctx.stroke();
   ctx.fill();
 };
-
-const normalize = (vec) => {
-  let l = Math.hypot(vec.x, vec.y);
-  vec.x /= l;
-  vec.y /= l;
-};
-
-const rotate = (vec, angle) => {
-  const x = vec.x * Math.cos(angle) - vec.y * Math.sin(angle);
-  const y = vec.x * Math.sin(angle) + vec.y * Math.cos(angle);
-  vec.x = x;
-  vec.y = y;
-};
-
-const scale = (vec, value) => {
-  vec.x *= value;
-  vec.y *= value;
-};
-
-const sum = (vec1, vec2) => {
-  return {
-    x: vec1.x + vec2.x,
-    y: vec1.y + vec2.y
-  };
-};
-
-const diff = (vec1, vec2) => {
-  return {
-    x: vec1.x - vec2.x,
-    y: vec1.y - vec2.y
-  };
-};
-
-const Point = (x, y) => ({x, y});
 
 const drawPythagorasTreeImpl = (ctx, n, a, b, c, d) => {
   if (n === 0)
