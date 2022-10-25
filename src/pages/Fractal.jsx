@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import Page from '../components/Page';
-import styles from './PythagorasTree.module.css';
+import styles from './Fractal.module.css';
 
 const WIDTH = 500;
 const HEIGHT = 500;

@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
-// import App from './App';
-import Fractal from './pages/PythagorasTree';
+
+import Fractal from './pages/Fractal';
 import { drawPythagorasTree } from './DrawPythagorasTree';
 import './index.css';
 
