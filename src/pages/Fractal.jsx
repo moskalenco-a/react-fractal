@@ -23,6 +23,10 @@ const draw = (ctx, drawFunc, initialSize = 50, levels = 9, cx = 250, cy = 350, c
 const Fractal = (props) => {
   const canvasRef = useRef(null);
 
+  const { minSize = 1, maxSize = 200 } = props;
+  const { minLevels = 1 } = props;
+  const { maxLevels = 9 } = props;
+
   const { drawFunc } = props;
   const { defaultSize = 50 } = props;
   const { defaultX = 250 } = props;
@@ -66,9 +70,9 @@ const Fractal = (props) => {
       <div className={styles.container}>
         <div>
           <p>Initial size = {initialSize}</p>
-          <input type="range" value={initialSize} min="1" max="200" step="1" onChange={onSizeChange} className={styles.range} />
+          <input type="range" value={initialSize} min={minSize} max={maxSize} step="1" onChange={onSizeChange} className={styles.range} />
           <p>Levels = {levelsCount}</p>
-          <input type="range" value={levelsCount} min="1" max="10" step="1" onChange={onLevelsCountChange} className={styles.range} />
+          <input type="range" value={levelsCount} min={minLevels} max={maxLevels} step="1" onChange={onLevelsCountChange} className={styles.range} />
           <p>Center:</p>
           <div className={styles.coords}>
             <div className={styles.coordX}>

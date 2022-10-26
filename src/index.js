@@ -5,14 +5,21 @@ import reportWebVitals from './reportWebVitals';
 
 import Fractal from './pages/Fractal';
 import { drawPythagorasTree } from './DrawPythagorasTree';
+import { drawMinkowskiFractal } from './DrawMinkowskiFractal';
 import './index.css';
+
+const MinkowskyIsland = (props) => {
+  return (
+    <Fractal drawFunc={drawMinkowskiFractal} minSize={150} maxSize={400} minLevels={1} maxLevels={5} defaultSize={210} />
+  );
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Fractal drawFunc={drawPythagorasTree} />} />
+        <Route path="/" element={<MinkowskyIsland />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
