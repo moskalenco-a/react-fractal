@@ -10,7 +10,8 @@ import './index.css';
 
 const MinkowskyIsland = (props) => {
   return (
-    <Fractal drawFunc={drawMinkowskiFractal} minSize={150} maxSize={400} minLevels={1} maxLevels={5} defaultSize={210} />
+    <Fractal drawFunc={drawMinkowskiFractal} minSize={150} maxSize={400} minLevels={1} maxLevels={5} defaultSize={210}
+                        defaultLevels={5}/>
   );
 };
 

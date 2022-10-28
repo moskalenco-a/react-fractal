@@ -3,7 +3,8 @@ import { sum, length, rotated, scaled } from './vecUtils';
 const drawMinkowskiFractalImpl = (ctx, n, first, second, vec = { x: 1, y: 0 }) => {
   if (n === 0)
     return;
-
+  if (second.y > first.y) vec = { x: 0, y: 1 };
+  if (second.y < first.y) vec = { x: 0, y: -1 };
   if (n === 1) {
     ctx.beginPath();
     ctx.beginPath();
@@ -57,9 +58,12 @@ const drawMinkowskiFractalImpl = (ctx, n, first, second, vec = { x: 1, y: 0 }) =
 };
 const Point = (x, y) => ({ x, y });
 
-export const drawMinkowskiFractal = (ctx, initialSize = 50, levels = 9, cx = 250, cy = 350) => {
+export const drawMinkowskiFractal = (ctx, initialSize = 50, levels = 3, cx = 250, cy = 350) => {
   const first = Point(cx, cy);
   const second = Point(cx + initialSize, cy);
   // drawMinkowskiFractalImpl(ctx, levels, first, second);
-  drawMinkowskiFractalImpl(ctx, 6, first, second);
+  drawMinkowskiFractalImpl(ctx, levels, first, second);
+  drawMinkowskiFractalImpl(ctx, levels, first, Point(cx, cy + initialSize));
+  drawMinkowskiFractalImpl(ctx, levels, Point(cx, cy + initialSize), Point(cx + initialSize, cy + initialSize));
+  drawMinkowskiFractalImpl(ctx, levels, second, Point(cx + initialSize, cy + initialSize));
 };
