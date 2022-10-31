@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
 
+import Page from './components/Page';
 import Fractal from './pages/Fractal';
 import { drawPythagorasTree } from './DrawPythagorasTree';
 import { drawMinkowskiFractal } from './DrawMinkowskiFractal';
@@ -10,7 +11,8 @@ import './index.css';
 
 const MinkowskyIsland = (props) => {
   return (
-    <Fractal drawFunc={drawMinkowskiFractal}
+    <Fractal name="minkowsky"
+             drawFunc={drawMinkowskiFractal}
              minSize={150} maxSize={400}
              minLevels={1} maxLevels={5}
              defaultSize={210} defaultLevels={3}
@@ -20,10 +22,11 @@ const MinkowskyIsland = (props) => {
 
 const PythagorasTree = (props) => {
   return (
-    <Fractal drawFunc={drawPythagorasTree}
+    <Fractal name="pythagoras"
+             drawFunc={drawPythagorasTree}
              minSize={50} maxSize={400}
              minLevels={1} maxLevels={10}
-             defaultSize={85} defaultLevels={9}
+             defaultSize={77} defaultLevels={9}
              defaultX={288} defaultY={333} />
   );
 };
@@ -34,7 +37,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PythagorasTree />} />
+        <Route path="/" element={<Page />} />
+        <Route path="/pythagor" element={<PythagorasTree />} />
+        <Route path="/minkowsky" element={<MinkowskyIsland />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -1,4 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import Page from '../components/Page';
 import styles from './Fractal.module.css';
 
@@ -64,7 +66,16 @@ const Fractal = (props) => {
   };
   const onLineStyleChange = (event) => {
     setLineStyle(event.target.value);
-  }
+  };
+  const linkActive = ({ isActive }) => isActive ? styles.activeLink : undefined;
+  const onExportClick = () => {
+    let canvasUrl = canvasRef.current.toDataURL();
+    const createEl = document.createElement('a');
+    createEl.href = canvasUrl;
+    createEl.download = props.name || "fractal";
+    createEl.click();
+    createEl.remove();
+  };
   return (
     <Page>
       <div className={styles.container}>
@@ -98,10 +109,18 @@ const Fractal = (props) => {
           </div>
         </div>
 
-        <canvas ref={canvasRef}
-                width={WIDTH}
-                height={HEIGHT}
-                className={styles.canvas} />
+        <div className={styles.canvas}>
+          <canvas ref={canvasRef}
+                  width={WIDTH}
+                  height={HEIGHT}
+                  className={styles.canvas} />
+          <button className={styles.export}
+                  onClick={onExportClick}>Export</button>
+        </div>
+      </div>
+      <div className={styles.links}>
+        <NavLink className={linkActive} to="/pythagor">Pythagoras Tree</NavLink>
+        <NavLink className={linkActive} to="/minkowsky">Minkowsky Tree</NavLink>
       </div>
     </Page>
   );
