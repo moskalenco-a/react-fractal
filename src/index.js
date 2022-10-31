@@ -10,17 +10,31 @@ import './index.css';
 
 const MinkowskyIsland = (props) => {
   return (
-    <Fractal drawFunc={drawMinkowskiFractal} minSize={150} maxSize={400} minLevels={1} maxLevels={5} defaultSize={210}
-                        defaultLevels={5}/>
+    <Fractal drawFunc={drawMinkowskiFractal}
+             minSize={150} maxSize={400}
+             minLevels={1} maxLevels={5}
+             defaultSize={210} defaultLevels={3}
+             defaultX={150} defaultY={150} />
+  );
+};
+
+const PythagorasTree = (props) => {
+  return (
+    <Fractal drawFunc={drawPythagorasTree}
+             minSize={50} maxSize={400}
+             minLevels={1} maxLevels={10}
+             defaultSize={85} defaultLevels={9}
+             defaultX={288} defaultY={333} />
   );
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// <Route path="/" element={<MinkowskyIsland />} />
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MinkowskyIsland />} />
+        <Route path="/" element={<PythagorasTree />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
