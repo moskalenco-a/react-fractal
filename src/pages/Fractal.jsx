@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Page from '../components/Page';
+import Range from '../components/Range';
 import styles from './Fractal.module.css';
 
 const WIDTH = 500;
@@ -49,17 +50,17 @@ const Fractal = (props) => {
     draw(context, drawFunc, initialSize, levelsCount, centerX, centerY, color, lineStyle);
   }, [drawFunc, initialSize, levelsCount, centerX, centerY, color, lineStyle]);
 
-  const onSizeChange = (event) => {
-    setInitialSize(parseInt(event.target.value));
+  const onSizeChange = (value) => {
+    setInitialSize(value);
   };
-  const onLevelsCountChange = (event) => {
-    setLevelsCount(parseInt(event.target.value));
+  const onLevelsCountChange = (value) => {
+    setLevelsCount(value);
   };
-  const onCenterXChange = (event) => {
-    setCenterX(parseInt(event.target.value));
+  const onCenterXChange = (value) => {
+    setCenterX(value);
   };
-  const onCenterYChange = (event) => {
-    setCenterY(parseInt(event.target.value));
+  const onCenterYChange = (value) => {
+    setCenterY(value);
   };
   const onColorChange = (event) => {
     setColor(event.target.value);
@@ -81,9 +82,13 @@ const Fractal = (props) => {
       <div className={styles.container}>
         <div>
           <p>Initial size = {initialSize}</p>
-          <input type="range" value={initialSize} min={minSize} max={maxSize} step="1" onChange={onSizeChange} className={styles.range} />
+          <Range value={initialSize}
+                 min={minSize} max={maxSize}
+                 onChange={onSizeChange} />
           <p>Levels = {levelsCount}</p>
-          <input type="range" value={levelsCount} min={minLevels} max={maxLevels} step="1" onChange={onLevelsCountChange} className={styles.range} />
+          <Range value={levelsCount}
+                 min={minLevels} max={maxLevels}
+                 onChange={onLevelsCountChange} />
           <p>Center:</p>
           <div className={styles.coords}>
             <div className={styles.coordX}>
