@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  gap: 30px;
+}
+
+.canvas {
+  display: block;
+  border: 1px solid blue;
+  /* margin-left: 30px; */
+  position: relative;
+}
+
+.export {
+  cursor: pointer;
+  position: absolute;
+  bottom: -5px;
+  left: -5px;
+  background-color: var(--primary-color);
+  color: #000;
+  border: none;
+  font-size: 24px;
+  width: 145px;
+  height: 37px;
+  border-radius: 12px;
+}

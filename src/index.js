@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 
 import Page from './components/Page';
 import Fractal from './pages/Fractal';
+import RotatingTriangle from './pages/RotatingTriangle';
 import { drawPythagorasTree } from './DrawPythagorasTree';
 import { drawMinkowskiFractal } from './DrawMinkowskiFractal';
 import './index.css';
@@ -37,9 +38,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Page />} />
+        <Route path="/" element={<RotatingTriangle />} />
         <Route path="/pythagor" element={<PythagorasTree />} />
         <Route path="/minkowsky" element={<MinkowskyIsland />} />
+        <Route path="/rotate" element={<RotatingTriangle />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

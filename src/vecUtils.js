@@ -47,3 +47,8 @@ export const rotated = (vec, angle) => {
     y: vec.x * Math.sin(angle) + vec.y * Math.cos(angle)
   };
 };
+
+export const rotatedAround = (vec, center, angle) => {
+  const v = diff(vec, center);
+  return sum(rotated(v, angle), center);
+};
