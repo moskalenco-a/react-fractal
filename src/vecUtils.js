@@ -56,6 +56,15 @@ export const RotateMatrix = (angle) => {
   ];
 };
 
+export const RotateAroundMatrix = (angle, point) => {
+  const { x, y } = point;
+  return multipleMatrices(
+    TranslateMatrix({ x: -x, y: -y}),
+    RotateMatrix(angle),
+    TranslateMatrix({x, y})
+  );
+};
+
 export const ScaleMatrix = (vector) => {
   const { x, y } = vector;
   return [
@@ -63,15 +72,6 @@ export const ScaleMatrix = (vector) => {
     [0, y, 0],
     [0, 0, 1]
   ];
-};
-
-export const RotateAroundMatrix = (angle, point) => {
-  const { x, y } = point;
-  return multipleMatrices(
-    TranslateMatrix({x, y}),
-    RotateMatrix(angle),
-    TranslateMatrix({ x: -x, y: -y})
-  );
 };
 
 export const length = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
