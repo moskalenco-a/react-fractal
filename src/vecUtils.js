@@ -33,6 +33,7 @@ const vectorFromColumnMatrix = (matrix) => {
 };
 
 export const transform = (matrix, vector) => {
+  // vector.z = 1;
   vector = multipleMatrices(matrix, columnMatrixFromVector(vector));
   return vectorFromColumnMatrix(vector);
 };
@@ -40,9 +41,9 @@ export const transform = (matrix, vector) => {
 export const TranslateMatrix = (vector) => {
   const { x, y } = vector;
   return [
-    [1, 0, 0],
-    [0, 1, 0],
-    [x, y, 1]
+    [1, 0, x],
+    [0, 1, y],
+    [0, 0, 1]
   ];
 };
 
@@ -59,9 +60,9 @@ export const RotateMatrix = (angle) => {
 export const RotateAroundMatrix = (angle, point) => {
   const { x, y } = point;
   return multipleMatrices(
-    TranslateMatrix({ x: -x, y: -y}),
+    TranslateMatrix({x, y}),
     RotateMatrix(angle),
-    TranslateMatrix({x, y})
+    TranslateMatrix({ x: -x, y: -y})
   );
 };
 
@@ -79,21 +80,17 @@ export const length = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 export const sum = (vec1, vec2) => {
   // vec1.z = 1;
   // vec2.z = 1;
-  // const matrix = TranslateMatrix(vec2);
-  // return transform(matrix, vec1);
-  return {
-    x: vec1.x + vec2.x,
-    y: vec1.y + vec2.y,
-  };
+  const matrix = TranslateMatrix(vec2);
+  return transform(matrix, vec1);
+  // return {
+  //   x: vec1.x + vec2.x,
+  //   y: vec1.y + vec2.y,
+  // };
 };
 
 export const diff = (vec1, vec2) => {
-  // const matrix = TranslateMatrix({ x: -vec2.x, y: -vec2.y });
-  // return transform(matrix, vec1);
-  return {
-    x: vec1.x - vec2.x,
-    y: vec1.y - vec2.y,
-  };
+  const matrix = TranslateMatrix({ x: -vec2.x, y: -vec2.y });
+  return transform(matrix, vec1);
 };
 
 export const normalize = (vec) => {
