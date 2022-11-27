@@ -23,3 +23,12 @@
   height: 37px;
   border-radius: 12px;
 }
+
+/* .cb {                */
+/*   margin-right: 5px; */
+/* }                    */
+
+.cbCont {
+  display: flex;
+  gap: 5px;
+}

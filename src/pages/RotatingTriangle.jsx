@@ -66,6 +66,10 @@ const RotatingTriangle = (props) => {
   const onByChange = (event) => {
     setB(p => ({...p, y: +event.target.value}));
   };
+  const [attachOffset, setAttachOffset] = useState(false);
+  const onAttachOffsetChange = (event) => {
+    setAttachOffset(event.target.checked);
+  };
 
   const onExportClick = () => {
     let canvasUrl = canvasRef.current.toDataURL();
@@ -82,10 +86,18 @@ const RotatingTriangle = (props) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    const trans = (point) => transform(multipleMatrices(
-      TranslateMatrix({ x: offsetX * stepAngle, y: 0 }),
-      RotateAroundMatrix(-stepAngle / 180 * Math.PI, center)),
-    point);
+    const matrices1 = [
+      TranslateMatrix(Point(offsetX * stepAngle, 0)),
+      RotateAroundMatrix(-stepAngle / 180 * Math.PI, center),
+    ];
+    const matrices2 = [
+      TranslateMatrix(Point(offsetX, 0)),
+      RotateAroundMatrix(-stepAngle / 180 * Math.PI, center),
+    ];
+    const trans = (point) => {
+      const matrs = attachOffset ? matrices1 : matrices2;
+      return transform(multipleMatrices(...matrs), point);
+    };
 
     // очищаємо область для малювання
     context.clearRect(0, 0, WIDTH, HEIGHT);
@@ -109,20 +121,27 @@ const RotatingTriangle = (props) => {
     //   sumAngle += stepAngle;
     // }, 50);
     // return () => clearInterval(interval);
-  }, [stepAngle, offsetX, a, b, c]);
+  }, [stepAngle, offsetX, a, b, c, attachOffset]);
 
   return (
     <Page>
       <div className={styles.container}>
         <div>
-          <p>Rotate around center</p>
+          <p>Rotate angle: {stepAngle}</p>
           <Range value={stepAngle}
                  min={0} max={360}
                  onChange={(value) => setStepAngle(value)} />
           <p>X offset: {offsetX}</p>
           <Range value={offsetX}
-                 min={-20} max={20}
+                 min={-50} max={50}
                  onChange={(value) => setOffsetX(value)} />
+          <div className={styles.cbCont}>
+            <input type="checkbox"
+                   className={styles.cb}
+                   checked={attachOffset}
+                   onChange={onAttachOffsetChange} />
+            Attach offset to rotation
+          </div>
           <p>A</p>
           <div>
             X: <input type="text" placeholder="X"
