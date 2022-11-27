@@ -5,9 +5,10 @@ import Range from '../components/Range';
 import styles from './RotatingTriangle.module.css';
 
 import { Point, length, sum, diff,
-         normalize, scale, rotatedAround } from '../vecUtils';
+         transform, RotateAroundMatrix, TranslateMatrix,
+         normalize, scale, multipleMatrices } from '../vecUtils';
 
-const WIDTH = 500;
+const WIDTH = 1000;
 const HEIGHT = 500;
 
 const drawLine = (ctx, a, b, color = '#000000') => {
@@ -26,7 +27,7 @@ const RotatingTriangle = (props) => {
   const [offsetX, setOffsetX] = useState(0);
 
   // центр квадрату
-  const centerX = Math.floor(WIDTH / 2);
+  const centerX = Math.floor(WIDTH / 4);
   const centerY = Math.floor(HEIGHT / 2);
   const center = Point(centerX, centerY);
 
@@ -78,31 +79,36 @@ const RotatingTriangle = (props) => {
   useEffect(() => {
     // setSumAngle(0);
     let sumAngle = 0;
-    // анмація
-    const interval = setInterval(() => {
-      // збільшуємо кут
-      sumAngle += stepAngle;
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
 
-      // очищаємо область для малювання
-      context.clearRect(0, 0, WIDTH, HEIGHT);
-      // малюємо осі
-      drawLine(context, Point(0, centerY), Point(WIDTH, centerY));
-      drawLine(context, Point(centerX, 0), Point(centerX, HEIGHT));
-      const offsetPoint = Point(offsetX, 0);
-      // до вершин додаємо зміщення по іксу
-      // також повертаємо вершини навколо центру
-      // на потрібний кут
-      const rotatedA = rotatedAround(sum(a, offsetPoint), center, sumAngle / 180 * Math.PI);
-      const rotatedB = rotatedAround(sum(b, offsetPoint), center, sumAngle / 180 * Math.PI);
-      const rotatedC = rotatedAround(sum(c, offsetPoint), center, sumAngle / 180 * Math.PI);
-      // малюємо кожну сторону
-      drawLine(context, rotatedA, rotatedB, '#ff0000');
-      drawLine(context, rotatedB, rotatedC, '#ff0000');
-      drawLine(context, rotatedA, rotatedC, '#ff0000');
-    }, 500);
-    return () => clearInterval(interval);
+    const trans = (point) => transform(multipleMatrices(
+      TranslateMatrix({ x: offsetX * stepAngle, y: 0 }),
+      RotateAroundMatrix(-stepAngle / 180 * Math.PI, center)),
+    point);
+
+    // очищаємо область для малювання
+    context.clearRect(0, 0, WIDTH, HEIGHT);
+    // малюємо осі
+    drawLine(context, Point(0, centerY), Point(WIDTH, centerY));
+    drawLine(context, Point(centerX, 0), Point(centerX, HEIGHT));
+    const offsetPoint = Point(offsetX, 0);
+    // до вершин додаємо зміщення по іксу
+    // також повертаємо вершини навколо центру
+    // на потрібний кут
+    const rotatedA = trans(a);
+    const rotatedB = trans(b);
+    const rotatedC = trans(c);
+    // малюємо кожну сторону
+    drawLine(context, rotatedA, rotatedB, '#ff0000');
+    drawLine(context, rotatedB, rotatedC, '#ff0000');
+    drawLine(context, rotatedA, rotatedC, '#ff0000');
+    // // анмація
+    // const interval = setInterval(() => {
+    //   // збільшуємо кут
+    //   sumAngle += stepAngle;
+    // }, 50);
+    // return () => clearInterval(interval);
   }, [stepAngle, offsetX, a, b, c]);
 
   return (
