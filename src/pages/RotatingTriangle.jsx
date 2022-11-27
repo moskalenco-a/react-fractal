@@ -19,21 +19,9 @@ const drawLine = (ctx, a, b, color = '#000000') => {
   ctx.stroke();
 };
 
-const RotatingTriangle = (props) => {
-  const canvasRef = useRef(null);
-  // кут повороту
-  const [stepAngle, setStepAngle] = useState(0);
-  // змішення по ікс
-  const [offsetX, setOffsetX] = useState(0);
-
-  // центр квадрату
-  const centerX = Math.floor(WIDTH / 4);
-  const centerY = Math.floor(HEIGHT / 2);
-  const center = Point(centerX, centerY);
-
-  // а і б = вершини трикутника
-  let [a, setA] = useState(Point(centerX - 100 + offsetX, centerY * 1.2));
-  let [b, setB] = useState(Point(centerX + 100 + offsetX, centerY * 1.2));
+// пошук третьої вершини
+// правильного трикутника
+const getThirdPoint = (a, b) => {
   // v = b - a
   let v = diff(b, a);
   // v = (y; -x) = вектор перпендикулярний
@@ -52,19 +40,75 @@ const RotatingTriangle = (props) => {
   // додаємо той вектор висоти
   // щоб отримати третю точку трикутника
   const c = sum(sideCenter, v);
+  return c;
+};
+
+const validPoint = (point) => {
+  return 0 < point.x && point.x < WIDTH &&
+         0 < point.y && point.y < HEIGHT;
+};
+
+const RotatingTriangle = (props) => {
+  const canvasRef = useRef(null);
+  // кут повороту
+  const [stepAngle, setStepAngle] = useState(0);
+  // змішення по ікс
+  const [offsetX, setOffsetX] = useState(0);
+
+  // центр квадрату
+  const centerX = Math.floor(WIDTH / 4);
+  const centerY = Math.floor(HEIGHT / 2);
+  const center = Point(centerX, centerY);
+
+  // а і б = вершини трикутника
+  let [a, setA] = useState(Point(centerX - 100 + offsetX, centerY * 1.2));
+  let [b, setB] = useState(Point(centerX + 100 + offsetX, centerY * 1.2));
+  let [c, setC] = useState(getThirdPoint(a, b));
 
   // функції які змінюють координати вершин
   const onAxChange = (event) => {
-    setA(p => ({...p, x: +event.target.value}));
+    const newX = +event.target.value;
+    const newA = { ...a, x: newX };
+    const newC = getThirdPoint(newA, b);
+    if (validPoint(newA) && validPoint(newC)) {
+      setA(newA);
+      setC(newC);
+    }
+    else
+      alert("Error, A.x is not valid: triangle is out of range");
   };
   const onAyChange = (event) => {
-    setA(p => ({...p, y: +event.target.value}));
+    const newY = +event.target.value;
+    const newA = { ...a, y: newY };
+    const newC = getThirdPoint(newA, b);
+    if (validPoint(newA) && validPoint(newC)) {
+      setA(newA);
+      setC(newC);
+    }
+    else
+      alert("Error, A.y is not valid: triangle is out of range");
   };
   const onBxChange = (event) => {
-    setB(p => ({...p, x: +event.target.value}));
+    const newX = +event.target.value;
+    const newB = { ...b, x: newX };
+    const newC = getThirdPoint(a, newB);
+    if (validPoint(newB) && validPoint(newC)) {
+      setB(newB);
+      setC(newC);
+    }
+    else
+      alert("Error, B.x is not valid: triangle is out of range");
   };
   const onByChange = (event) => {
-    setB(p => ({...p, y: +event.target.value}));
+    const newY = +event.target.value;
+    const newB = { ...b, y: newY };
+    const newC = getThirdPoint(a, newB);
+    if (validPoint(newB) && validPoint(newC)) {
+      setB(newB);
+      setC(newC);
+    }
+    else
+      alert("Error, B.y is not valid: triangle is out of range");
   };
   const [attachOffset, setAttachOffset] = useState(false);
   const onAttachOffsetChange = (event) => {

@@ -23,6 +23,11 @@ const draw = (ctx, drawFunc, initialSize = 50, levels = 9, cx = 250, cy = 350, c
   drawFunc(ctx, initialSize, levels, cx, cy);
 };
 
+const validPoint = (point) => {
+  return 0 < point.x && point.x < WIDTH &&
+         0 < point.y && point.y < HEIGHT;
+};
+
 const Fractal = (props) => {
   const canvasRef = useRef(null);
 
@@ -56,11 +61,19 @@ const Fractal = (props) => {
   const onLevelsCountChange = (value) => {
     setLevelsCount(value);
   };
-  const onCenterXChange = (value) => {
-    setCenterX(value);
+  const onCenterXChange = (event) => {
+    const value = +event.target.value;
+    if (validPoint({ x: value, y: centerY }))
+      setCenterX(value);
+    else
+      alert("Invalid center X: out of rarnge");
   };
-  const onCenterYChange = (value) => {
-    setCenterY(value);
+  const onCenterYChange = (event) => {
+    const value = +event.target.value;
+    if (validPoint({ x: centerX, y: value }))
+      setCenterY(value);
+    else
+      alert("Invalid center Y: out of rarnge");
   };
   const onColorChange = (event) => {
     setColor(event.target.value);
