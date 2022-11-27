@@ -11,24 +11,30 @@ import { drawMinkowskiFractal } from './DrawMinkowskiFractal';
 import './index.css';
 
 const MinkowskyIsland = (props) => {
+  const infoTitle = "What is Minkowski island ?";
+  const infoText = "Minkowski island is a beautiful fractal...";
   return (
     <Fractal name="minkowsky"
              drawFunc={drawMinkowskiFractal}
              minSize={150} maxSize={400}
              minLevels={1} maxLevels={5}
              defaultSize={210} defaultLevels={3}
-             defaultX={150} defaultY={150} />
+             defaultX={150} defaultY={150}
+             infoTitle={infoTitle} infoText={infoText} />
   );
 };
 
 const PythagorasTree = (props) => {
+  const infoTitle = "What is Pythagoras tree ?";
+  const infoText = "Pythagoras tree is a beautiful fractal...";
   return (
     <Fractal name="pythagoras"
              drawFunc={drawPythagorasTree}
              minSize={50} maxSize={400}
              minLevels={1} maxLevels={10}
              defaultSize={77} defaultLevels={9}
-             defaultX={288} defaultY={333} />
+             defaultX={288} defaultY={333}
+             infoTitle={infoTitle} infoText={infoText} />
   );
 };
 

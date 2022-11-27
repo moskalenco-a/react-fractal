@@ -169,6 +169,12 @@ const RotatingTriangle = (props) => {
 
   return (
     <Page>
+      <div className={styles.info}>
+        <p className={styles.infoButton}>How rotation works?</p>
+        <p className={styles.infoText}>
+          Some info here, some info here, some info here, some info here, some info here, some info here, some info here, some info here...
+        </p>
+      </div>
       <div className={styles.container}>
         <div>
           <p>Rotate angle: {stepAngle}</p>

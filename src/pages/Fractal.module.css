@@ -64,3 +64,31 @@
 .links > .activeLink {
   color: red;
 }
+
+.info {
+  position: relative;
+  height: 40px;
+}
+
+.info > p {
+  position: absolute;
+  right: 100px;
+  top: 0;
+  background-color: var(--primary-color);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.infoText {
+  display: none;
+}
+
+p.infoButton:hover + .infoText {
+  display: block;
+  position: absolute;
+  border: 1px solid #000;
+  z-index: 1000;
+  top: 50px;
+  right: 50px;
+  width: 300px;
+}
