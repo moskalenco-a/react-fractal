@@ -6,13 +6,21 @@
 .coords {
   margin-top: 0;
   display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
 .coordX, .coordY {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  gap: 10px;
+}
+
+.coords button {
+  width: 20px;
+  height: 20px;
+  border-radius: 0;
 }
 
 .coordXInput, .coordYInput {

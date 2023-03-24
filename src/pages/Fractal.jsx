@@ -63,6 +63,12 @@ const Fractal = (props) => {
   const onLevelsCountChange = (value) => {
     setLevelsCount(value);
   };
+
+  const onXPlus = () => setCenterX(x => x + 1);
+  const onXMinus = () => setCenterX(x => x - 1);
+  const onYPlus = () => setCenterY(y => y + 1);
+  const onYMinus = () => setCenterY(y => y - 1);
+
   const onCenterXChange = (event) => {
     const value = +event.target.value;
     if (validPoint({ x: value, y: centerY }))
@@ -111,12 +117,16 @@ const Fractal = (props) => {
           <p>Center:</p>
           <div className={styles.coords}>
             <div className={styles.coordX}>
-              <p>X:</p>
+              <p>X</p>
+              <button onClick={onXPlus}>+</button>
               <input type="text" placeholder="X" value={centerX} onChange={onCenterXChange} className={styles.coordXInput} />
+              <button onClick={onXMinus}>-</button>
             </div>
             <div className={styles.coordY}>
-              <p>Y:</p>
+              <p>Y</p>
+              <button onClick={onYPlus}>+</button>
               <input type="text" placeholder="Y" value={centerY} onChange={onCenterYChange} className={styles.coordYInput} />
+              <button onClick={onYMinus}>-</button>
             </div>
           </div>
           <div className={styles.colorContainer}>
