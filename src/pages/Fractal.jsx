@@ -35,8 +35,6 @@ const Fractal = (props) => {
   const { minLevels = 1 } = props;
   const { maxLevels = 9 } = props;
 
-  const { infoTitle, infoText } = props;
-
   const { drawFunc } = props;
   const { defaultSize = 50 } = props;
   const { defaultX = 250 } = props;
@@ -100,10 +98,6 @@ const Fractal = (props) => {
   };
   return (
     <Page>
-      <div className={styles.info}>
-        <p className={styles.infoButton}>{infoTitle}</p>
-        <p className={styles.infoText}>{infoText}</p>
-      </div>
       <div className={styles.container}>
         <div>
           <p>Initial size = {initialSize}</p>
