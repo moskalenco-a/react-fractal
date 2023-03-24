@@ -9,7 +9,6 @@ const Navbar = (props) => {
       <ul className={styles.menu}>
         <li className={firstClassName}><Link to="/">Home</Link></li>
         <li className={styles.item}><Link to="/pythagor">Fractals</Link></li>
-        <li className={styles.item}><Link to="/">Color schemes</Link></li>
         <li className={styles.item}><Link to="/rotate">Figure rotation</Link></li>
       </ul>
     </nav>
