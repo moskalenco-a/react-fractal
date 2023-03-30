@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/react-fractal/static/css/main.7a605c30.css",
-    "main.js": "/react-fractal/static/js/main.f239fa78.js",
+    "main.js": "/react-fractal/static/js/main.6b641932.js",
     "static/js/787.2bb45741.chunk.js": "/react-fractal/static/js/787.2bb45741.chunk.js",
     "index.html": "/react-fractal/index.html",
     "main.7a605c30.css.map": "/react-fractal/static/css/main.7a605c30.css.map",
-    "main.f239fa78.js.map": "/react-fractal/static/js/main.f239fa78.js.map",
+    "main.6b641932.js.map": "/react-fractal/static/js/main.6b641932.js.map",
     "787.2bb45741.chunk.js.map": "/react-fractal/static/js/787.2bb45741.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7a605c30.css",
-    "static/js/main.f239fa78.js"
+    "static/js/main.6b641932.js"
   ]
 }
