@@ -36,7 +36,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // <Route path="/" element={<MinkowskyIsland />} />
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<RotatingTriangle />} />
         <Route path="/pythagor" element={<PythagorasTree />} />
